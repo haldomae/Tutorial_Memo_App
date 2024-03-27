@@ -4,14 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haldomae.tutorial_memo_app.data.Memo
+import com.haldomae.tutorial_memo_app.viewmodel.MainViewModel
 
 //　アプリの土台はActivity
 // ActivityはAppCompatActivityクラスを継承して作成する
 class MainActivity : AppCompatActivity() {
+
+    // ViewModelを初期化
+    private val viewModel: MainViewModel by viewModels()
+
     // Activityが生成されたときに呼ばれるメソッド
     override fun onCreate(savedInstanceState: Bundle?) {
         // 親クラスAppCompatActivity()の同名メソッドを呼ぶ
@@ -28,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         // RecyclerViewをセット
         val recyclerView: RecyclerView = findViewById(R.id.main_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MainAdapter(Memo.createFakes())
+        recyclerView.adapter = MainAdapter()
         recyclerView.addItemDecoration(
             DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         )
@@ -46,5 +52,11 @@ class MainActivity : AppCompatActivity() {
                 commit()
             }
         }
+
+        viewModel.memoItems.observe(this) {
+            // ここでRecyclerViewのデータをアップデートしたい
+            (recyclerView.adapter as MainAdapter).setMemoItems(it)
+        }
+        viewModel.loadMemoItems()
     }
 }

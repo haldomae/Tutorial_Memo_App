@@ -11,11 +11,14 @@ import com.haldomae.tutorial_memo_app.data.Memo
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import kotlin.collections.List as List
 
 // RecyclerView : 子Viewをリサイクルして表示する大枠のViewGroup
 // Recycler.ViewHolder : 一つ一つの要素View(Item View)を保持するホルダー
 // Recycler.Adapter : 子View(Adapter)とデータをViewHolderを介して橋渡しする役割
-class MainAdapter(memoItems: List<Memo>) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class MainAdapter : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+    // private val memoItems: MutableList<Memo> = memoItems.toMutableList()
+    private var memoItems: List<Memo> = emptyList()
 
     // 一つ一つのItemViewを持つ (Holdする) ViewHolder
     class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -25,7 +28,6 @@ class MainAdapter(memoItems: List<Memo>) : RecyclerView.Adapter<MainAdapter.Main
         val expiredDate: TextView = itemView.findViewById(R.id.memo_expired_date)
     }
 
-    private val memoItems: MutableList<Memo> = memoItems.toMutableList()
 
     // ItemViewのレイアウトをViewHolderにInflateする
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -61,5 +63,11 @@ class MainAdapter(memoItems: List<Memo>) : RecyclerView.Adapter<MainAdapter.Main
         private const val DATE_FORMAT = "yyyy/MM/dd"
         @RequiresApi(Build.VERSION_CODES.O)
         private val DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT)
+    }
+
+    // データの変更とデータ変更通知
+    fun setMemoItems(items: List<Memo>) {
+        memoItems = items
+        notifyDataSetChanged()
     }
 }
