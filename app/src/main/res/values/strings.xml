@@ -3,4 +3,6 @@
     <string name="main_text">Hello Android Kotlin!</string>
     <!-- メモ追加ボタンのテキスト   -->
     <string name="main_add_button">メモを追加</string>
+    <string name="new_memo_text">新しいメモを追加</string>
+
 </resources>

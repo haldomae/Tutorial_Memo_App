@@ -23,7 +23,17 @@ class MainActivity : AppCompatActivity() {
         val addButton: Button = findViewById(R.id.add_button)
 
         addButton.setOnClickListener {
-            mainTextView.text = "ボタンが押された!"
+            // ActivityでFragmentを生成する時は、FragmentManager経由でFragmentTransactionのメソッドで追加を行う
+            supportFragmentManager.beginTransaction().apply {
+                // FragmentLayout上にNewMemoFragmentを追加する
+                add(R.id.main_container, NewMemoFragment())
+                // バックスタックにトランザクションを追加
+                // バックトランザクションに追加しておくと、Fragmentを積み上げた場合、期待したFragmentやActivityに戻れなくなるのを防ぐ
+                // 引数をnull以外にするとトランザクションに名前を付ける事ができる
+                addToBackStack(null)
+                // コミット
+                commit()
+            }
         }
     }
 }
