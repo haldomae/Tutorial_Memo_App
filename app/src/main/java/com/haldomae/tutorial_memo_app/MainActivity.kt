@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.haldomae.tutorial_memo_app.data.Memo
 
 //　アプリの土台はActivity
 // ActivityはAppCompatActivityクラスを継承して作成する
@@ -17,10 +21,17 @@ class MainActivity : AppCompatActivity() {
 
         // findViewById<T>()の <T>は型推論できるので省略可能
         // activity_main.xmlで割り当てたIDからViewを探す
-
         // val mainTextView = findViewById<TextView>(R.id.main_text)って書いても良い
-        val mainTextView: TextView = findViewById(R.id.main_text)
+        // val mainTextView: TextView = findViewById(R.id.main_text)
         val addButton: Button = findViewById(R.id.add_button)
+
+        // RecyclerViewをセット
+        val recyclerView: RecyclerView = findViewById(R.id.main_list)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = MainAdapter(Memo.createFakes())
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
 
         addButton.setOnClickListener {
             // ActivityでFragmentを生成する時は、FragmentManager経由でFragmentTransactionのメソッドで追加を行う
