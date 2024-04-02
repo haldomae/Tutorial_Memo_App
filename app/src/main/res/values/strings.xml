@@ -3,6 +3,8 @@
     <string name="main_text">メモ一覧</string>
     <!-- メモ追加ボタンのテキスト   -->
     <string name="main_add_button">メモを追加</string>
+    <string name="new_memo_add_button">メモを追加</string>
     <string name="new_memo_text">新しいメモを追加</string>
-
+    <string name="new_memo_title_label">タイトル</string>
+    <string name="new_memo_contents_label">内容</string>
 </resources>

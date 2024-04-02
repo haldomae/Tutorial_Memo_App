@@ -1,5 +1,8 @@
 package com.haldomae.tutorial_memo_app.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.concurrent.TimeUnit
 
 /**
@@ -11,28 +14,20 @@ import java.util.concurrent.TimeUnit
  * @param updateTimeMillis メモ更新日
  * @param expireTimeMillis メモの締め切り (廃棄日)
  */
+@Entity
 data class Memo (
-    val id: Int,
-    val title: String,
-    val contents: String,
-    val createdTimeMillis: Long,
-    val updateTimeMillis: Long,
-    val expireTimeMillis: Long
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "contents") val contents: String,
+    @ColumnInfo(name = "created_time_millis") val createdTimeMillis: Long,
+    @ColumnInfo(name = "update_time_millis") val updateTimeMillis: Long,
+    @ColumnInfo(name = "expire_time_millis") val expireTimeMillis: Long
 ) {
     companion object{
-        // ダミーデータを10件作成する
-        fun createFakes(): List<Memo> {
-            val now = System.currentTimeMillis()
-            return List(10) {
-                Memo(
-                    id = it,
-                    title = "Memo $it",
-                    contents = "memo description",
-                    createdTimeMillis = now,
-                    updateTimeMillis = now,
-                    expireTimeMillis = now + TimeUnit.DAYS.toMillis(7)
-                )
-            }
-        }
+        const val TITLE = "title"
+        const val CONTENTS = "contents"
+        const val CREATED_TIME = "created_time_millis"
+        const val UPDATE_TIME = "update_time_millis"
+        const val EXPIRE_TIME = "expire_time_millis"
     }
 }
